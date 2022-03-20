@@ -1,2 +1,2 @@
-# Viestintasovellus
+# Viestintäsovellus
 Sovelluksessa näkyy keskustelualueita/ketjuja, joihin käyttäjä voi lisätä oman kommentin ja antaa ääniä muiden kommenteille. Sovelluksen käyttöön vaaditaan kirjautuminen. Jokainen käyttäjä on joko ylläpitäjä tai tavallinen käyttäjä. Käyttäjä näkee etusivulla keskustelualueet ja jokaisen alueen yllä yhteenvedon niiden sisällöstä. Käyttäjä voi luoda keskustelualueelle omia ketjuja, jonka alle käyttäjä ja muut voivat kommentoida. Käyttäjät voivat äänestää muiden kommentteja. Ylläpitäjä voi luoda/poistaa keskustelualueita ja ketjuja.
