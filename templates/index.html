@@ -1,0 +1,9 @@
+<title>Front page</title>
+<h1>Front Page</h1>
+The available boards: ({{ count }})
+<hr>
+{% for board in boards %}
+{{ board[0] }}
+<p>
+<hr>
+{% endfor %}
