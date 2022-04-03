@@ -38,4 +38,4 @@ def register():
         if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Registration failed")
+            return render_template("error.html", message="Registration failed (username may be taken")
