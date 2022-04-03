@@ -8,11 +8,11 @@ Tällä hetkellä sovelluksessa voi
 - Luoda käyttäjätilin
 - Kirjautua sisään olemassa olevalla tilillä
 - Kirjautua ulos
+- Nähdä olemassa olevat keskustelualueet ja niiden lukumäärän etusivulla (0 kpl)
 
 Suunniteltuja ominaisuuksia
 - Käyttäjä voi luoda keskustelualueita, joihin voidaan käydä lisäämässä kommentteja
 - Kommentteja voi äänestää ylä- tai alapeukuin
-- Keskustelualueiden yllä näkyy yhteenveto niiden sisällöstä
 - Käyttäjä voi muokata tai poistaa omia viestejään
 - Uusi käyttäjärooli (ylläpitäjä), joka voi myös poistaa muiden viestejä
 
