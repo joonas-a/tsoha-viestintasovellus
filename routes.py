@@ -1,3 +1,4 @@
+from email import message
 from app import app
 from flask import render_template, request, redirect, session
 import boards, users
@@ -33,6 +34,12 @@ def register():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if len(username) < 4 or len(username) > 16:
+            return render_template("error.html", message="Username too short or long")
+        if len(password1) < 6:
+            return render_template("error.html", message="Password too short")
+        if len(password1) > 50:
+            return render_template("error.html", message="Password too long (keep it under 50 chars)")
         if password1 != password2:
             return render_template("error.html", message="The passwords did not match")
         if users.register(username, password1):
