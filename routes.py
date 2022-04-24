@@ -39,3 +39,8 @@ def register():
             return redirect("/")
         else:
             return render_template("error.html", message="Registration failed (username may be taken")
+
+@app.route("/boards/<string:title>")
+def board(title):
+    thread = boards.get_threads()
+    return render_template("board.html", board=title, threads=thread)

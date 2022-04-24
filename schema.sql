@@ -8,3 +8,12 @@ CREATE TABLE Boards (
     id SERIAL PRIMARY KEY,
     title TEXT
 );
+CREATE TABLE Threads (
+    id SERIAL PRIMARY KEY,
+    content TEXT,
+    u_id INTEGER REFERENCES Users,
+    b_id INTEGER REFERENCES Boards,
+    created_at TIMESTAMP
+);
+INSERT INTO Boards (title) VALUES ('main')
+INSERT INTO Boards (title) VALUES ('school')
