@@ -15,5 +15,6 @@ CREATE TABLE Threads (
     b_id INTEGER REFERENCES Boards,
     created_at TIMESTAMP
 );
-INSERT INTO Boards (title) VALUES ('main')
-INSERT INTO Boards (title) VALUES ('school')
+INSERT INTO Boards (title) VALUES ('main');
+
+INSERT INTO Boards (title) VALUES ('school');
