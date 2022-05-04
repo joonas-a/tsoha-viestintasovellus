@@ -1,4 +1,3 @@
-from email import message
 from app import app
 from flask import render_template, request, redirect, session
 import boards, users
@@ -45,9 +44,23 @@ def register():
         if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Registration failed (username may be taken")
+            return render_template("error.html", message="Registration failed (username may be taken)")
 
-@app.route("/boards/<string:title>")
-def board(title):
-    thread = boards.get_threads()
-    return render_template("board.html", board=title, threads=thread)
+@app.route("/boards/<int:id>")
+def board(id):
+    thread = boards.get_threads(id)
+    name = boards.get_board_name(id)
+    return render_template("board.html", board_name=name, board=id, threads=thread)
+
+@app.route("/boards/<int:id>/new_thread")
+def new_thread(id):
+    return render_template("new_thread.html", board_id=id)
+
+@app.route("/boards/<int:id>/create_new_thread", methods=["POST"])
+def create_new_thread(id):
+    title = request.form["title"]
+    content = request.form["content"]
+    board_id = request.form["board_id"]
+
+    boards.new_thread(content, board_id, title)
+    return redirect("/boards/" + str(board_id))

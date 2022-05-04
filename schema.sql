@@ -14,6 +14,7 @@ CREATE TABLE Threads (
     u_id INTEGER REFERENCES Users,
     b_id INTEGER REFERENCES Boards,
     created_at TIMESTAMP
+    title TEXT,
 );
 INSERT INTO Boards (title) VALUES ('main');
 

@@ -1,4 +1,4 @@
-<h1>{{board}}</h1>
+<h1>{{board_name}}</h1>
 <a href="/">To front page</a>
 <p></p>
 {% if session.user_id %}
@@ -8,4 +8,10 @@ You are logged in.
 <a href="/login">Log in</a> or <a href="/register">Create an account</a>
 {% endif %}
 <hr>
-<i>functionality to be added</i>
+<p>Threads within placeholder:</p>
+<hr>
+{% for thread in threads %}
+<p>{{thread[1]}}</p>
+{% endfor %}
+<hr>
+<a href="/boards/{{board}}/new_thread">Create a new thread</a>
