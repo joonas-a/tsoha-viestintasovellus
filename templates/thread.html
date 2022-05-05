@@ -1,0 +1,21 @@
+<h1>Temporary</h1>
+<a href="/">To front page</a>
+<p></p>
+{% if session.user_id %}
+You are logged in.
+<a href="/logout">Log out</a>
+{% else %}
+<a href="/login">Log in</a> or <a href="/register">Create an account</a>
+{% endif %}
+<hr>
+<b>{{ title }}</b>
+<br>
+{{ content }}
+<br>
+{% if timestamp != None %}
+    {{ timestamp.strftime("%d-%m-%Y %H:%M") }}
+{% else %}
+    <a>N/A</a>
+{% endif %}
+<br>
+{{ creator }}

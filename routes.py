@@ -48,9 +48,9 @@ def register():
 
 @app.route("/boards/<int:id>")
 def board(id):
-    thread = boards.get_threads(id)
+    thread = boards.get_all_threads(id)
     name = boards.get_board_name(id)
-    return render_template("board.html", board_name=name, board=id, threads=thread)
+    return render_template("board.html", board_name=name, board_id=id, threads=thread)
 
 @app.route("/boards/<int:id>/new_thread")
 def new_thread(id):
@@ -64,3 +64,8 @@ def create_new_thread(id):
 
     boards.new_thread(content, board_id, title)
     return redirect("/boards/" + str(board_id))
+
+@app.route("/boards/<int:id>/<int:thread_id>")
+def thread(id, thread_id):
+    thread = boards.get_single_thread(thread_id)
+    return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], creator=thread[3])
