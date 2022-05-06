@@ -4,8 +4,10 @@
     <p>The available boards: ({{ count }})</p>
     <hr>
     {% for board in boards %}
-    <a href="/boards/{{board[0]}}">{{ board[1] }}</a>
+    <ul>
+        <li><h3><a href="/boards/{{board[0]}}">{{ board[1] }}</a></h3></li>
+    </ul>
     <p></p>
-    <hr>
     {% endfor %}
+    <hr>
 {% endblock %}

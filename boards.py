@@ -42,7 +42,7 @@ def get_comments(thread_id):
 
 def new_comment(content, thread_id):
     user_id = users.user_id()
-    if user_id == 0:
+    if user_id == 0 or len(content)<5:
         return False
     sql = "INSERT INTO Comments (t_id, u_id, created_at, content) "\
         "VALUES (:t_id, :u_id, NOW(), :content)"

@@ -11,7 +11,7 @@ def index():
 @app.route("/logout")
 def logout():
     users.logout()
-    return redirect("/")
+    return redirect(request.referrer)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -21,7 +21,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            return redirect("/")
+            return redirect(request.referrer)
         else:
             return render_template("error.html", message="Username or password is wrong")
 
