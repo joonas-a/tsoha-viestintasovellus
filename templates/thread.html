@@ -12,4 +12,22 @@
     {% endif %}
     <br>
     {{ creator }}
+    <hr>
+    {% if session.user_id %}
+    <form action="/boards/{{board_id}}/{{thread_id}}/new_comment" method="POST">
+        <p>Leave a comment:</p>
+        <textarea name="message" rows="4" cols="50" minlength="2" maxlength="1000"></textarea><br>
+        <input type="submit" value="Comment">
+    </form>
+    <hr>
+    {% endif %}
+    {% for comment in comments %}
+        <p>{{ comment[1] }}</p><br>
+        {% if comment[2] != None %}
+        <p>{{ comment[2].strftime("%d-%m-%Y %H:%M") }} By: {{ comment[3] }}</p>
+        {% else %}
+        <p>N/A By: {{ comment[3] }}</p>
+        {% endif %}
+        <hr>
+    {% endfor %}
 {% endblock %}

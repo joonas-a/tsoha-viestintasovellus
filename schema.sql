@@ -16,6 +16,10 @@ CREATE TABLE Threads (
     created_at TIMESTAMP,
     title TEXT
 );
-INSERT INTO Boards (title) VALUES ('main');
-
-INSERT INTO Boards (title) VALUES ('school');
+CREATE TABLE Comments (
+    id SERIAL PRIMARY KEY,
+    t_id INTEGER REFERENCES Threads,
+    u_id INTEGER REFERENCES Users,
+    created_at TIMESTAMP,
+    content TEXT
+);

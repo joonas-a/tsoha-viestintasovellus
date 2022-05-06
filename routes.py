@@ -69,4 +69,13 @@ def create_new_thread(id):
 @app.route("/boards/<int:id>/<int:thread_id>")
 def thread(id, thread_id):
     thread = boards.get_single_thread(thread_id)
-    return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], creator=thread[3])
+    comments = boards.get_comments(thread_id)
+    return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], creator=thread[3], \
+        comments=comments, thread_id=thread_id, board_id=id)
+
+@app.route("/boards/<int:id>/<int:thread_id>/new_comment", methods=["POST"])
+def new_comment(id, thread_id):
+    message = request.form["message"]
+
+    boards.new_comment(message, thread_id)
+    return redirect("/boards/" + str(id) + "/" + str(thread_id))

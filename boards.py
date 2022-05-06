@@ -33,3 +33,19 @@ def get_single_thread(thread_id):
         "WHERE U.id=T.u_id AND T.id=:thread_id ORDER BY T.id"
     result = db.session.execute(sql, {"thread_id":thread_id})
     return result.fetchone()
+
+def get_comments(thread_id):
+    sql = "SELECT  DISTINCT C.id, C.content, C.created_at, U.username FROM Comments C, Users U, Threads T "\
+        "WHERE C.t_id=:thread_id AND C.u_id=U.id ORDER BY C.id DESC"
+    result = db.session.execute(sql, {"thread_id":thread_id})
+    return result.fetchall()
+
+def new_comment(content, thread_id):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
+    sql = "INSERT INTO Comments (t_id, u_id, created_at, content) "\
+        "VALUES (:t_id, :u_id, NOW(), :content)"
+    db.session.execute(sql, {"t_id":thread_id, "u_id":user_id, "content":content})
+    db.session.commit()
+    return True
