@@ -25,10 +25,15 @@
     {% for comment in comments %}
         <p>{{ comment[1] }}</p><br>
         {% if comment[2] != None %}
-        <p>{{ comment[2].strftime("%d-%m-%Y %H:%M") }} By: {{ comment[3] }}</p>
+            <p>{{ comment[2].strftime("%d-%m-%Y %H:%M") }} By: {{ comment[3] }}</p>
         {% else %}
-        <p>N/A By: {{ comment[3] }}</p>
+            <p>N/A By: {{ comment[3] }}
         {% endif %}
+        {% if comment[4] == session.user_id %}
+            <a href="/boards/{{board_id}}/{{thread_id}}/delete_comment/{{comment[0]}}">Delete</a>
+            <a href="/boards/{{board_id}}/{{thread_id}}/edit_comment/{{comment[0]}}">Edit</a>
+        {% endif %}
+        </p>
         <hr>
     {% endfor %}
 {% endblock %}

@@ -79,3 +79,20 @@ def new_comment(id, thread_id):
 
     boards.new_comment(message, thread_id)
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
+
+@app.route("/boards/<int:id>/<int:thread_id>/edit_comment/<int:comment_id>")
+def edit_comment(id, thread_id, comment_id):
+    old_comment = boards.get_single_comment(comment_id)
+    return render_template("edit_comment.html", board_id=id, thread_id=thread_id, comment_id=comment_id, \
+        old_comment=old_comment)
+
+@app.route("/boards/<int:id>/<int:thread_id>/finish_editing/<int:comment_id>", methods=["POST"])
+def finish_editing(id, thread_id, comment_id):
+    new_message = request.form["message"]
+    boards.edit_comment(comment_id, new_message)
+    return redirect("/boards/" + str(id) + "/" + str(thread_id))
+
+@app.route("/boards/<int:id>/<int:thread_id>/delete_comment/<int:comment_id>")
+def delete_comment(id, thread_id, comment_id):
+    boards.delete_comment(comment_id)
+    return redirect(request.referrer)

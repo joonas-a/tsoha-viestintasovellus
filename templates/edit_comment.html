@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h4>Edit your comment</h4>
+    <p></p>
+    <form action="/boards/{{board_id}}/{{thread_id}}/finish_editing/{{comment_id}}" method="POST">
+        <p>Message:</p>
+        <textarea name="message" rows="4" cols="40">{{old_comment}}</textarea>
+        <input type="submit" value="Edit">
+    </form>
+
+{% endblock %}
