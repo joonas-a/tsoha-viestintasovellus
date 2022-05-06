@@ -7,7 +7,7 @@
     {% endif %}
     <hr>
     {% for thread in threads %}
-    <a href="/boards/{{board_id}}/{{thread[0]}}">{{thread[1]}}</a>
+    <a href="/boards/{{board_id}}/{{thread[0]}}"><b>{{thread[1]}}</b></a>
     {% if thread[2] != None %}
     <p>Submitted: {{ thread[2].strftime("%d-%m-%Y %H:%M") }} By: {{ thread[3] }}</p>
     {% else %}
