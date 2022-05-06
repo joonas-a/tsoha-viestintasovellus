@@ -1,11 +1,15 @@
-<a href="/">Go back</a>
-<p></p>
-<form action="/register" method="post">
-Username: <input type="text" placeholder="4-16 characters" name="username"
-<p></p>
-Password: <input type="password" placeholder="min 6 characters" name="password1"
-<p></p>
-Password again: <input type="password" name="password2"
-<p></p>
-<input type="submit" value="Create account">
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="/">Go back</a>
+    <p></p>
+    <form action="/register" method="post">
+    Username: <input type="text" placeholder="4-16 characters" name="username" minlength="4" maxlength="16">
+    <p></p>
+    Password: <input type="password" placeholder="min 6 characters" name="password1" minlength="6" maxlength="50">
+    <p></p>
+    Password again: <input type="password" name="password2">
+    <p></p>
+    <input type="submit" value="Create account">
+    </form>
+{% endblock %}

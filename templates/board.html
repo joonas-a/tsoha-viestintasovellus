@@ -1,18 +1,18 @@
-<h1>{{board_name}}</h1>
-<a href="/">To front page</a>
-<p></p>
-{% if session.user_id %}
-You are logged in.
-<a href="/logout">Log out</a>
-{% else %}
-<a href="/login">Log in</a> or <a href="/register">Create an account</a>
-{% endif %}
-<hr>
-<p>Threads within placeholder:</p>
-<hr>
-{% for thread in threads %}
-<a href="/boards/{{board_id}}/{{thread[0]}}">{{thread[1]}}</a>
-<br>
-{% endfor %}
-<hr>
-<a href="/boards/{{board}}/new_thread">Create a new thread</a>
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Threads in '{{ board_name }}': ({{ count }})</p>
+    {% if session.user_id %}
+    <a href="/boards/{{board_id}}/new_thread"><b>Create a new thread</b></a>
+    {% endif %}
+    <hr>
+    {% for thread in threads %}
+    <a href="/boards/{{board_id}}/{{thread[0]}}">{{thread[1]}}</a>
+    {% if thread[2] != None %}
+    <p>Submitted: {{ thread[2].strftime("%d-%m-%Y %H:%M") }} By: {{ thread[3] }}</p>
+    {% else %}
+    <p>Submitted: N/A By: {{ thread[3] }}</p>
+    {% endif %}
+    <hr>
+    {% endfor %}
+{% endblock %}

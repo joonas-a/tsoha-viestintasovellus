@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tsoha-forum</title>
+    </head>
+    <body>
+        <h1>Tsoha-forum</h1>
+        <a href="/">Front page</a>
+        <p></p>
+        {% if session.user_id %}
+        Logged in as: {{ session.user_username }}
+        <a href="/logout">Log out</a>
+        {% else %}
+        <a href="/login">Log in</a> or <a href="/register">Create an account</a>
+        {% endif %}
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

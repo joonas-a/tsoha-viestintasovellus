@@ -1,18 +1,11 @@
-<title>Frontpage</title>
-<h1>Tsoha-forum</h1>
-<a href="/">Front page</a>
-<p></p>
-{% if session.user_id %}
-You are logged in.
-<a href="/logout">Log out</a>
-{% else %}
-<a href="/login">Log in</a> or <a href="/register">Create an account</a>
-{% endif %}
-<p></p>
-The available boards: ({{ count }})
-<hr>
-{% for board in boards %}
-<a href="/boards/{{board[0]}}">{{ board[1] }}</a>
-<p>
-<hr>
-{% endfor %}
+{% extends "base.html" %}
+
+{% block content %}
+    <p>The available boards: ({{ count }})</p>
+    <hr>
+    {% for board in boards %}
+    <a href="/boards/{{board[0]}}">{{ board[1] }}</a>
+    <p></p>
+    <hr>
+    {% endfor %}
+{% endblock %}

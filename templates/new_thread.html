@@ -1,10 +1,14 @@
-<h1>Temp otsikko</h1>
-<p></p>
-<form action="/boards/{{board_id}}/create_new_thread" method="POST">
-Otsikko:<br>
-<input type="text" name="title"> <br>
-Viesti:<br>
-<textarea name="content" rows="3" cols="30"></textarea><br>
-<input type="hidden" name="board_id" value="{{ board_id }}">
-<input type="submit" value="Create thread">
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>Create a new thread in '{{ board_name }}'</h3>
+    <p></p>
+    <form action="/boards/{{board_id}}/create_new_thread" method="POST">
+    <a>Title:</a><br>
+    <input type="text" name="title"><br>
+    <a>Message:</a><br>
+    <textarea name="content" rows="3" cols="30"></textarea><br>
+    <input type="hidden" name="board_id" value="{{ board_id }}">
+    <input type="submit" value="Create thread">
+    </form>
+{% endblock %}

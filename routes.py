@@ -50,11 +50,12 @@ def register():
 def board(id):
     thread = boards.get_all_threads(id)
     name = boards.get_board_name(id)
-    return render_template("board.html", board_name=name, board_id=id, threads=thread)
+    return render_template("board.html", board_name=name, board_id=id, threads=thread, count=len(thread))
 
 @app.route("/boards/<int:id>/new_thread")
 def new_thread(id):
-    return render_template("new_thread.html", board_id=id)
+    board_name = boards.get_board_name(id)
+    return render_template("new_thread.html", board_id=id, board_name=board_name)
 
 @app.route("/boards/<int:id>/create_new_thread", methods=["POST"])
 def create_new_thread(id):
