@@ -3,7 +3,7 @@
 {% block content %}
     <h3>Create a new thread in '{{ board_name }}'</h3>
     <p></p>
-    <form action="/boards/{{board_id}}/create_new_thread" method="POST">
+    <form action="/boards/{{board_id}}/new_thread" method="POST">
         <a>Title:</a><br>
         <input type="text" name="title" placeholder="Your title" minlength="5" maxlength="40"><br>
         <a>Message:</a><br>

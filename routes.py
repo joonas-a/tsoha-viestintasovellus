@@ -52,23 +52,22 @@ def board(id):
     name = boards.get_board_name(id)
     return render_template("board.html", board_name=name, board_id=id, threads=thread, count=len(thread))
 
-@app.route("/boards/<int:id>/new_thread")
+@app.route("/boards/<int:id>/new_thread", methods=["GET", "POST"])
 def new_thread(id):
-    board_name = boards.get_board_name(id)
-    return render_template("new_thread.html", board_id=id, board_name=board_name)
+    if request.method == "GET":
+        board_name = boards.get_board_name(id)
+        return render_template("new_thread.html", board_id=id, board_name=board_name)
 
-@app.route("/boards/<int:id>/create_new_thread", methods=["POST"])
-def create_new_thread(id):
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
-    title = request.form["title"]
-    if len(title) < 5 or len(title) > 40:
-        return render_template("error.html", message="Title needs to be 5-40 characters long.")
-    content = request.form["content"]
-    board_id = request.form["board_id"]
-
-    boards.new_thread(content, board_id, title)
-    return redirect("/boards/" + str(board_id))
+    if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        title = request.form["title"]
+        if len(title) < 5 or len(title) > 40:
+            return render_template("error.html", message="Title needs to be 5-40 characters long.")
+        content = request.form["content"]
+        board_id = request.form["board_id"]
+        boards.new_thread(content, board_id, title)
+        return redirect("/boards/" + str(board_id))
 
 @app.route("/boards/<int:id>/<int:thread_id>/edit_thread", methods=["GET", "POST"])
 def edit_thread(id, thread_id):
