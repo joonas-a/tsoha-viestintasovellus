@@ -1,15 +1,15 @@
 # Viestintäsovellus
+Sovellusta voi testata herokussa painamalla **[tästä](https://powerful-depths-82693.herokuapp.com/)**.
 
-Sovellusta pääsee testaamaan painamalla **[tästä](https://powerful-depths-82693.herokuapp.com/)**.
-
-Tällä hetkellä sovelluksessa voi
+**Tällä hetkellä sovelluksessa voi:**
 - Luoda käyttäjätilin
-- Kirjautua sisään olemassa olevalla tilillä
-- Kirjautua ulos
-- Nähdä olemassa olevat keskustelualueet ja niiden lukumäärän etusivulla
-- Käyttäjä voi avata keskustelualueen ja nähdä sen sisältämät ketjut
+- Kirjautua sisään/ulos olemassa olevalla tilillä
+- Nähdä olemassa olevat keskustelualueet (boards) ja niiden lukumäärän etusivulla
+- Avata keskustelualueita, ja nähdä niiden sisältämät ketjut (threads)
+- Luoda alueille uusia ketjuja
+- Jättää kommentteja (comments) ketjuihin
+- Muokata sekä poistaa omia ketjuja ja kommentteja
 
-Suunniteltuja ominaisuuksia
-- Käyttäjät voivat luoda alueille ketjuja
-- Käyttäjä voi muokata tai poistaa omia viestejään/ketjujaan
-- Uusi käyttäjärooli (ylläpitäjä), joka voi myös poistaa muiden viestejä
+*Mahdollisia jatkokehitysideoita:*
+- Kommenttien arvostelusysteemi
+- Uusi käyttäjärooli (ylläpitäjä), joka voi myös poistaa muiden viestejä ja luoda uusia keskustelualueita
