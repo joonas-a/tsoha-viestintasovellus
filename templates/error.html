@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <body>
-        <p>Error: {{ message }}</p><br>
-        <p></p>
-        <a href="/">To front page</a>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    {% if title %}
+    <h1>{{ title }}</h1>
+    <p></p>
+    {% endif %}
+    {% if message %}
+    <p>{{ message }}</p><br>
+    {% endif %}
+    <a href="{{ previous_url }}">Go back</a>
+{% endblock %}

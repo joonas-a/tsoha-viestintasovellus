@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+ - '{{ board_name }}'
+ {% endblock %}
+
 {% block content %}
     <p>Threads in '{{ board_name }}': ({{ count }})</p>
     {% if session.user_id %}

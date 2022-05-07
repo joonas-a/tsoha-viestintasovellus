@@ -6,7 +6,7 @@
         <title>Tsoha-forum</title>
     </head>
     <body>
-        <h1>Tsoha-forum</h1>
+        <h1>Tsoha-forum{% block title %}{% endblock %}</h1>
         <a href="/">Front page</a>
         <p></p>
         {% if session.user_id %}

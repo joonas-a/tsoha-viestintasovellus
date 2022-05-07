@@ -5,9 +5,9 @@
     <p></p>
     <form action="/boards/{{board_id}}/create_new_thread" method="POST">
         <a>Title:</a><br>
-        <input type="text" name="title"><br>
+        <input type="text" name="title" placeholder="Your title" minlength="5" maxlength="40"><br>
         <a>Message:</a><br>
-        <textarea name="content" rows="3" cols="30"></textarea><br>
+        <textarea name="content" rows="3" cols="30" maxlength="1000"></textarea><br>
         <input type="hidden" name="board_id" value="{{ board_id }}">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Create thread">

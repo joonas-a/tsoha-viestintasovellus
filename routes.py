@@ -21,7 +21,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            return redirect(request.referrer)
+            return redirect("/")
         else:
             return render_template("error.html", message="Username or password is wrong")
 
