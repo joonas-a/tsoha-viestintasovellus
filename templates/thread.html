@@ -19,7 +19,11 @@
 
     <!-- TODO: THREAD DELETION-->
     {% if session.user_id == creator_id %}
-    <a href="/boards/{{board_id}}/{{thread_id}}/edit_thread">Edit Thread</a>
+    <a href="/boards/{{board_id}}/{{thread_id}}/edit_thread">Edit</a>
+    <form action="/boards/{{board_id}}/{{thread_id}}/delete_thread" onsubmit="return confirm('Permanently delete this thread?');" method="POST">
+        <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+        <input type="submit" class="link-button" value="Delete thread">
+    </form>
     {% endif %}
 
     <hr>

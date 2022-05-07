@@ -18,7 +18,7 @@ CREATE TABLE if not exists Threads (
 );
 CREATE TABLE if not exists Comments (
     id SERIAL PRIMARY KEY,
-    t_id INTEGER REFERENCES Threads,
+    t_id INTEGER REFERENCES Threads ON DELETE CASCADE,
     u_id INTEGER REFERENCES Users,
     created_at TIMESTAMP,
     content TEXT

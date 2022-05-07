@@ -3,3 +3,13 @@ body {
     max-width:50em;
     font-family: Arial, Helvetica, sans-serif
 }
+
+.link-button {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0000EE;
+    text-decoration: underline;
+    cursor: pointer;
+  }

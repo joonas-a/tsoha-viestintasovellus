@@ -44,6 +44,15 @@ def edit_thread(thread_id, content):
     db.session.commit()
     return True
 
+def delete_thread(thread_id):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
+    sql = "DELETE FROM Threads WHERE id=:thread_id AND u_id=:user_id"
+    db.session.execute(sql, {"thread_id":thread_id, "user_id":user_id})
+    db.session.commit()
+    return True
+
 def get_comments(thread_id):
     sql = "SELECT  DISTINCT C.id, C.content, C.created_at, U.username, C.u_id FROM Comments C, Users U, Threads T "\
         "WHERE C.t_id=:thread_id AND C.u_id=U.id ORDER BY C.id DESC"

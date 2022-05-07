@@ -83,6 +83,13 @@ def edit_thread(id, thread_id):
         boards.edit_thread(thread_id, edited_message)
         return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
+@app.route("/boards/<int:id>/<int:thread_id>/delete_thread", methods=["POST"])
+def delete_thread(id, thread_id):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    boards.delete_thread(thread_id)
+    return redirect("/boards/" + str(id))
+
 @app.route("/boards/<int:id>/<int:thread_id>")
 def thread(id, thread_id):
     thread = boards.get_single_thread(thread_id)
