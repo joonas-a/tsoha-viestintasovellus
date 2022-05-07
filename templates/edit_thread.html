@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h4>Edit your thread..</h4>
+    <p></p>
+    <form action="/boards/{{board_id}}/{{thread_id}}/edit_thread" method="POST">
+        <p>Title: <i>(Can not be changed)</i></p>
+        <input type="text" name="title" value="{{title}}" readonly><br>
+        <p>Message:</p>
+        <textarea name="message" rows="4" cols="50">{{content}}</textarea>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="submit" value="Edit">
+    </form>
+
+{% endblock %}

@@ -16,6 +16,12 @@
     {% else %}
         <i>N/A</i>
     {% endif %}
+
+    <!-- TODO: THREAD DELETION-->
+    {% if session.user_id == creator_id %}
+    <a href="/boards/{{board_id}}/{{thread_id}}/edit_thread">Edit Thread</a>
+    {% endif %}
+
     <hr>
     {% if session.user_id %}
     <form action="/boards/{{board_id}}/{{thread_id}}/new_comment" method="POST">
@@ -35,8 +41,8 @@
             <p>N/A By: {{ comment[3] }}
         {% endif %}
         {% if comment[4] == session.user_id %}
-            <a href="/boards/{{board_id}}/{{thread_id}}/delete_comment/{{comment[0]}}">Delete</a>
-            <a href="/boards/{{board_id}}/{{thread_id}}/edit_comment/{{comment[0]}}">Edit</a>
+        <a href="/boards/{{board_id}}/{{thread_id}}/edit_comment/{{comment[0]}}">Edit</a>
+        <a href="/boards/{{board_id}}/{{thread_id}}/delete_comment/{{comment[0]}}">Delete</a>
         {% endif %}
         </p>
         <hr>

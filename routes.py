@@ -61,20 +61,35 @@ def new_thread(id):
 def create_new_thread(id):
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
-        
     title = request.form["title"]
+    if len(title) < 5 or len(title) > 40:
+        return render_template("error.html", message="Title needs to be 5-40 characters long.")
     content = request.form["content"]
     board_id = request.form["board_id"]
 
     boards.new_thread(content, board_id, title)
     return redirect("/boards/" + str(board_id))
 
+@app.route("/boards/<int:id>/<int:thread_id>/edit_thread", methods=["GET", "POST"])
+def edit_thread(id, thread_id):
+    if request.method == "GET":
+        thread = boards.get_single_thread(thread_id)
+        return render_template("edit_thread.html", title=thread[0], content=thread[1], \
+            board_id=id, thread_id=thread_id)
+    if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        edited_message = request.form["message"]
+        boards.edit_thread(thread_id, edited_message)
+        return redirect("/boards/" + str(id) + "/" + str(thread_id))
+
 @app.route("/boards/<int:id>/<int:thread_id>")
 def thread(id, thread_id):
     thread = boards.get_single_thread(thread_id)
+    board_name = boards.get_board_name(id)
     comments = boards.get_comments(thread_id)
     return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], creator=thread[3], \
-        comments=comments, thread_id=thread_id, board_id=id)
+        comments=comments, thread_id=thread_id, board_id=id, board_name=board_name, creator_id=thread[5])
 
 @app.route("/boards/<int:id>/<int:thread_id>/new_comment", methods=["POST"])
 def new_comment(id, thread_id):
@@ -85,20 +100,19 @@ def new_comment(id, thread_id):
     boards.new_comment(message, thread_id)
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
-@app.route("/boards/<int:id>/<int:thread_id>/edit_comment/<int:comment_id>")
+@app.route("/boards/<int:id>/<int:thread_id>/edit_comment/<int:comment_id>", methods=["GET", "POST"])
 def edit_comment(id, thread_id, comment_id):
-    old_comment = boards.get_single_comment(comment_id)
-    return render_template("edit_comment.html", board_id=id, thread_id=thread_id, comment_id=comment_id, \
-        old_comment=old_comment)
+    if request.method == "GET":
+        old_comment = boards.get_single_comment(comment_id)
+        return render_template("edit_comment.html", board_id=id, thread_id=thread_id, comment_id=comment_id, \
+            old_comment=old_comment)
 
-@app.route("/boards/<int:id>/<int:thread_id>/finish_editing/<int:comment_id>", methods=["POST"])
-def finish_editing(id, thread_id, comment_id):
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
-
-    new_message = request.form["message"]
-    boards.edit_comment(comment_id, new_message)
-    return redirect("/boards/" + str(id) + "/" + str(thread_id))
+    if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
+        new_message = request.form["message"]
+        boards.edit_comment(comment_id, new_message)
+        return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
 @app.route("/boards/<int:id>/<int:thread_id>/delete_comment/<int:comment_id>")
 def delete_comment(id, thread_id, comment_id):

@@ -4,7 +4,7 @@
 
     <h4>Edit your comment</h4>
     <p></p>
-    <form action="/boards/{{board_id}}/{{thread_id}}/finish_editing/{{comment_id}}" method="POST">
+    <form action="/boards/{{board_id}}/{{thread_id}}/edit_comment/{{comment_id}}" method="POST">
         <p>Message:</p>
         <textarea name="message" rows="4" cols="40">{{old_comment}}</textarea>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

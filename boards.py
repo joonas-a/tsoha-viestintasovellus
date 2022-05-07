@@ -28,11 +28,21 @@ def new_thread(content, board_id, title):
     return True
 
 def get_single_thread(thread_id):
-    sql = "SELECT T.title, T.content, T.created_at, U.username, T.id "\
+    sql = "SELECT T.title, T.content, T.created_at, U.username, T.id, T.u_id "\
         "FROM Threads T, Users U, Boards B "\
         "WHERE U.id=T.u_id AND T.id=:thread_id ORDER BY T.id"
     result = db.session.execute(sql, {"thread_id":thread_id})
     return result.fetchone()
+
+def edit_thread(thread_id, content):
+    user_id = users.user_id()
+    if user_id == 0:
+        return False
+    sql = "UPDATE Threads SET content=:content "\
+        "WHERE u_id=:user_id AND id=:thread_id"
+    db.session.execute(sql, {"content":content, "user_id":user_id, "thread_id":thread_id})
+    db.session.commit()
+    return True
 
 def get_comments(thread_id):
     sql = "SELECT  DISTINCT C.id, C.content, C.created_at, U.username, C.u_id FROM Comments C, Users U, Threads T "\
