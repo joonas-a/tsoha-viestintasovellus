@@ -18,6 +18,7 @@
         <p>Leave a comment:</p>
         <textarea name="message" rows="4" cols="40" minlength="5" maxlength="1000" placeholder="Minimum 5 characters"></textarea>
         <br>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Comment">
     </form>
     <hr>

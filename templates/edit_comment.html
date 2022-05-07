@@ -7,6 +7,7 @@
     <form action="/boards/{{board_id}}/{{thread_id}}/finish_editing/{{comment_id}}" method="POST">
         <p>Message:</p>
         <textarea name="message" rows="4" cols="40">{{old_comment}}</textarea>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Edit">
     </form>
 

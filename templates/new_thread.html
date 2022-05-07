@@ -9,6 +9,7 @@
         <a>Message:</a><br>
         <textarea name="content" rows="3" cols="30"></textarea><br>
         <input type="hidden" name="board_id" value="{{ board_id }}">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Create thread">
     </form>
 {% endblock %}

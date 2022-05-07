@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, abort
 import boards, users
 
 
@@ -59,6 +59,9 @@ def new_thread(id):
 
 @app.route("/boards/<int:id>/create_new_thread", methods=["POST"])
 def create_new_thread(id):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+        
     title = request.form["title"]
     content = request.form["content"]
     board_id = request.form["board_id"]
@@ -75,8 +78,10 @@ def thread(id, thread_id):
 
 @app.route("/boards/<int:id>/<int:thread_id>/new_comment", methods=["POST"])
 def new_comment(id, thread_id):
-    message = request.form["message"]
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
+    message = request.form["message"]
     boards.new_comment(message, thread_id)
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
@@ -88,6 +93,9 @@ def edit_comment(id, thread_id, comment_id):
 
 @app.route("/boards/<int:id>/<int:thread_id>/finish_editing/<int:comment_id>", methods=["POST"])
 def finish_editing(id, thread_id, comment_id):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     new_message = request.form["message"]
     boards.edit_comment(comment_id, new_message)
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
