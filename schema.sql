@@ -23,3 +23,15 @@ CREATE TABLE if not exists Comments (
     created_at TIMESTAMP,
     content TEXT
 );
+CREATE TABLE if not exists Comment_Votes (
+    id SERIAL PRIMARY KEY,
+    vote SMALLINT,
+    u_id INTEGER REFERENCES Users,
+    c_id INTEGER REFERENCES Comments ON DELETE CASCADE
+);
+CREATE TABLE if not exists Thread_Votes (
+    id SERIAL PRIMARY KEY,
+    vote SMALLINT,
+    u_id INTEGER REFERENCES Users,
+    t_id INTEGER REFERENCES Threads ON DELETE CASCADE
+);

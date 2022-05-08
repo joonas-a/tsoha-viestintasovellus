@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, abort
-import boards, users
+import boards, users, votes
 
 
 @app.route("/")
@@ -94,8 +94,10 @@ def thread(id, thread_id):
     thread = boards.get_single_thread(thread_id)
     board_name = boards.get_board_name(id)
     comments = boards.get_comments(thread_id)
-    return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], creator=thread[3], \
-        comments=comments, thread_id=thread_id, board_id=id, board_name=board_name, creator_id=thread[5])
+    thread_votes = votes.get_thread_votes(thread_id)
+    return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], \
+        creator=thread[3], comments=comments, thread_id=thread_id, board_id=id, board_name=board_name, \
+            creator_id=thread[5], thread_votes=thread_votes)
 
 @app.route("/boards/<int:id>/<int:thread_id>/new_comment", methods=["POST"])
 def new_comment(id, thread_id):
@@ -124,3 +126,37 @@ def edit_comment(id, thread_id, comment_id):
 def delete_comment(id, thread_id, comment_id):
     boards.delete_comment(comment_id)
     return redirect(request.referrer)
+
+@app.route("/boards/<int:id>/<int:thread_id>/vote", methods=["POST"])
+def vote_thread(id, thread_id):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    has_voted = votes.has_voted_thread(thread_id)
+    if has_voted == False:
+        if request.form["action"] == "Upvote":
+            votes.vote_thread(thread_id, 1)
+            print("fresh upvote")
+        elif request.form["action"] == "Downvote":
+            votes.vote_thread(thread_id, -1)
+            print("fresh downvote")
+    else:
+        current_vote = votes.get_thread_vote_status(thread_id)
+        if current_vote == 1 and request.form["action"] == "Upvote":
+            votes.change_vote_thread(thread_id, 0)
+            print("1")
+        elif current_vote == 0 and request.form["action"] == "Upvote":
+            votes.change_vote_thread(thread_id, 1)
+            print("1")
+        elif current_vote == -1 and request.form["action"] == "Downvote":
+            votes.change_vote_thread(thread_id, 0)
+            print("2")
+        elif current_vote == -0 and request.form["action"] == "Downvote":
+            votes.change_vote_thread(thread_id, -1)
+            print("2")
+        elif current_vote == -1 and request.form["action"] == "Upvote":
+            votes.change_vote_thread(thread_id, 1)
+            print("2")
+        elif current_vote == 1 and request.form["action"] == "Downvote":
+            votes.change_vote_thread(thread_id, -1)
+            print("2")
+    return redirect("/boards/" + str(id) + "/" + str(thread_id))

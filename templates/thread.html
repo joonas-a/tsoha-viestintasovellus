@@ -9,6 +9,17 @@
     <p></p>
     <p>{{ content }}</p>
     <br>
+    {% if thread_votes != None %}
+        <p>{{ thread_votes }} upvote(s)</p>
+    {% else %}
+        <p>0 upvote(s)</p>
+    {% endif %}
+    <form action="/boards/{{board_id}}/{{thread_id}}/vote" method="POST">
+        <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+        <input type="submit" name="action" class="button" value="Upvote">
+        <input type="submit" name="action" class="button" value="Downvote">
+    </form>
+
     <i>By: {{ creator }}</i>
     <br>
     {% if timestamp != None %}
@@ -16,8 +27,6 @@
     {% else %}
         <i>N/A</i>
     {% endif %}
-
-    <!-- TODO: THREAD DELETION-->
     {% if session.user_id == creator_id %}
     <a href="/boards/{{board_id}}/{{thread_id}}/edit_thread">Edit</a>
     <form action="/boards/{{board_id}}/{{thread_id}}/delete_thread" onsubmit="return confirm('Permanently delete this thread?');" method="POST">
