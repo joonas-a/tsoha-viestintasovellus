@@ -135,10 +135,8 @@ def vote_thread(id, thread_id):
     if has_voted == False:
         if request.form["action"] == "Upvote":
             votes.vote_thread(thread_id, 1)
-            print("fresh upvote")
         elif request.form["action"] == "Downvote":
             votes.vote_thread(thread_id, -1)
-            print("fresh downvote")
     else:
         current_vote = votes.get_thread_vote_status(thread_id)
         if current_vote == 1 and request.form["action"] == "Upvote":
