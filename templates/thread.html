@@ -40,7 +40,7 @@
     {% if session.user_id %}
     <form action="/boards/{{board_id}}/{{thread_id}}/new_comment" method="POST">
         <p>Leave a comment:</p>
-        <textarea name="message" rows="4" cols="40" minlength="5" maxlength="1000" placeholder="Minimum 5 characters"></textarea>
+        <textarea name="message" rows="3" cols="40" minlength="5" maxlength="1000" placeholder="Minimum 5 characters"></textarea>
         <br>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="submit" value="Comment">
@@ -49,6 +49,18 @@
     {% endif %}
     {% for comment in comments %}
         <p>{{ comment[1] }}</p><br>
+        {% if comment_votes[comment[0]] != None %}
+            <p>{{ comment_votes[comment[0]] }} upvote(s)</p>
+        {% else %}
+            <p>0 upvote(s)</p>
+        {% endif %}
+        {% if session.user_id %}
+        <form action="/boards/{{board_id}}/{{thread_id}}/{{comment[0]}}/vote" method="POST">
+            <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+            <input type="submit" name="action" class="button" value="Upvote">
+            <input type="submit" name="action" class="button" value="Downvote">
+        </form>
+        {% endif %}
         {% if comment[2] != None %}
             <p>{{ comment[2].strftime("%d-%m-%Y %H:%M") }} By: {{ comment[3] }}</p>
         {% else %}

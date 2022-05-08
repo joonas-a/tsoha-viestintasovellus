@@ -97,9 +97,12 @@ def thread(id, thread_id):
     board_name = boards.get_board_name(id)
     comments = boards.get_comments(thread_id)
     thread_votes = votes.get_thread_votes(thread_id)
+    comment_votes = {}
+    for comment in comments:
+        comment_votes[comment[0]]=votes.get_comment_votes(comment[0])
     return render_template("thread.html", title=thread[0], content=thread[1], timestamp=thread[2], \
         creator=thread[3], comments=comments, thread_id=thread_id, board_id=id, board_name=board_name, \
-            creator_id=thread[5], thread_votes=thread_votes)
+            creator_id=thread[5], thread_votes=thread_votes, comment_votes=comment_votes)
 
 @app.route("/boards/<int:id>/<int:thread_id>/new_comment", methods=["POST"])
 def new_comment(id, thread_id):
@@ -158,5 +161,37 @@ def vote_thread(id, thread_id):
             print("2")
         elif current_vote == 1 and request.form["action"] == "Downvote":
             votes.change_vote_thread(thread_id, -1)
+            print("2")
+    return redirect("/boards/" + str(id) + "/" + str(thread_id))
+
+@app.route("/boards/<int:id>/<int:thread_id>/<int:comment_id>/vote", methods=["POST"])
+def vote_comment(id, thread_id, comment_id):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    has_voted = votes.has_voted_comment(comment_id)
+    if has_voted == False:
+        if request.form["action"] == "Upvote":
+            votes.vote_comment(comment_id, 1)
+        elif request.form["action"] == "Downvote":
+            votes.vote_comment(comment_id, -1)
+    else:
+        current_vote = votes.get_comment_vote_status(comment_id)
+        if current_vote == 1 and request.form["action"] == "Upvote":
+            votes.change_vote_comment(comment_id, 0)
+            print("1")
+        elif current_vote == 0 and request.form["action"] == "Upvote":
+            votes.change_vote_comment(comment_id, 1)
+            print("1")
+        elif current_vote == -1 and request.form["action"] == "Downvote":
+            votes.change_vote_comment(comment_id, 0)
+            print("2")
+        elif current_vote == -0 and request.form["action"] == "Downvote":
+            votes.change_vote_comment(comment_id, -1)
+            print("2")
+        elif current_vote == -1 and request.form["action"] == "Upvote":
+            votes.change_vote_comment(comment_id, 1)
+            print("2")
+        elif current_vote == 1 and request.form["action"] == "Downvote":
+            votes.change_vote_comment(comment_id, -1)
             print("2")
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
