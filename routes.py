@@ -67,6 +67,8 @@ def new_thread(id):
         if len(title) < 5 or len(title) > 40:
             return render_template("error.html", message="Title needs to be 5-40 characters long.")
         content = request.form["content"]
+        if len(content) > 1000:
+            return render_template("error.html", message="Message needs to be under 1000 characters.")
         board_id = request.form["board_id"]
         boards.new_thread(content, board_id, title)
         return redirect("/boards/" + str(board_id))
@@ -81,6 +83,8 @@ def edit_thread(id, thread_id):
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         edited_message = request.form["message"]
+        if len(edited_message) > 1000:
+            return render_template("error.html", message="Message needs to be under 1000 characters.")
         boards.edit_thread(thread_id, edited_message)
         return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
@@ -110,6 +114,8 @@ def new_comment(id, thread_id):
         abort(403)
 
     message = request.form["message"]
+    if len(message) > 1000 or len(message) < 5:
+        return render_template("error.html", message="Message needs to be between 5-1000 characters.")
     boards.new_comment(message, thread_id)
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
@@ -124,6 +130,8 @@ def edit_comment(id, thread_id, comment_id):
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         new_message = request.form["message"]
+        if len(new_message) > 1000 or len(new_message) < 5:
+            return render_template("error.html", message="Message needs to be between 5-1000 characters.")
         boards.edit_comment(comment_id, new_message)
         return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
@@ -146,22 +154,16 @@ def vote_thread(id, thread_id):
         current_vote = votes.get_thread_vote_status(thread_id)
         if current_vote == 1 and request.form["action"] == "Upvote":
             votes.change_vote_thread(thread_id, 0)
-            print("1")
         elif current_vote == 0 and request.form["action"] == "Upvote":
             votes.change_vote_thread(thread_id, 1)
-            print("1")
         elif current_vote == -1 and request.form["action"] == "Downvote":
             votes.change_vote_thread(thread_id, 0)
-            print("2")
         elif current_vote == -0 and request.form["action"] == "Downvote":
             votes.change_vote_thread(thread_id, -1)
-            print("2")
         elif current_vote == -1 and request.form["action"] == "Upvote":
             votes.change_vote_thread(thread_id, 1)
-            print("2")
         elif current_vote == 1 and request.form["action"] == "Downvote":
             votes.change_vote_thread(thread_id, -1)
-            print("2")
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
 
 @app.route("/boards/<int:id>/<int:thread_id>/<int:comment_id>/vote", methods=["POST"])
@@ -178,20 +180,14 @@ def vote_comment(id, thread_id, comment_id):
         current_vote = votes.get_comment_vote_status(comment_id)
         if current_vote == 1 and request.form["action"] == "Upvote":
             votes.change_vote_comment(comment_id, 0)
-            print("1")
         elif current_vote == 0 and request.form["action"] == "Upvote":
             votes.change_vote_comment(comment_id, 1)
-            print("1")
         elif current_vote == -1 and request.form["action"] == "Downvote":
             votes.change_vote_comment(comment_id, 0)
-            print("2")
         elif current_vote == -0 and request.form["action"] == "Downvote":
             votes.change_vote_comment(comment_id, -1)
-            print("2")
         elif current_vote == -1 and request.form["action"] == "Upvote":
             votes.change_vote_comment(comment_id, 1)
-            print("2")
         elif current_vote == 1 and request.form["action"] == "Downvote":
             votes.change_vote_comment(comment_id, -1)
-            print("2")
     return redirect("/boards/" + str(id) + "/" + str(thread_id))
