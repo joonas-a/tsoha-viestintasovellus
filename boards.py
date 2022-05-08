@@ -12,8 +12,10 @@ def get_board_name(board_id):
     return result.fetchone()[0]
 
 def get_all_threads(board_id):
-    sql = "SELECT DISTINCT T.id, T.title, T.created_at, U.username FROM Threads T, Boards B, Users U "\
-        "WHERE T.b_id=:board_id AND T.u_id=U.id ORDER BY T.id DESC"
+    sql = "SELECT DISTINCT T.id, T.title, T.created_at, U.username "\
+        "FROM Threads T, Boards B, Users U "\
+        "WHERE T.b_id=:board_id AND T.u_id=U.id "\
+        "ORDER BY T.id DESC"
     result = db.session.execute(sql, {"board_id":board_id})
     return result.fetchall()
 

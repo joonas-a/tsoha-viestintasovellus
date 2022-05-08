@@ -6,16 +6,27 @@
         <title>Tsoha-forum</title>
     </head>
     <body>
-        <h1>Tsoha-forum{% block title %}{% endblock %}</h1>
-        <a href="/">Front page</a>
-        <p></p>
-        {% if session.user_id %}
-        Logged in as: {{ session.user_username }}
-        <a href="/logout">Log out</a>
-        {% else %}
-        <a href="/login">Log in</a> or <a href="/register">Create an account</a>
+        <div style="float:left; width:30em; height:150px;">
+            <h1>Tsoha-forum{% block title %}{% endblock %}</h1>
+            <a href="/">Front page</a>
+            <p></p>
+            {% if session.user_id %}
+            Logged in as: {{ session.user_username }}
+            <a href="/logout">Log out</a>
+            {% else %}
+            <a href="/register">Don't have an account?</a>
+        </div>
+        <div style="float:left; width:20em; height:100px; margin-top:30px;">
+            <form action="/login" method="post">
+                Username: <input type="text" name="username" style="margin-bottom:10px;"><br>
+                Password: <input type="password" name="password" style="margin-left:4px;"><br>
+                <input type="submit" value="Login" style="margin-top:15px;">
+            </form>
+        </div>
         {% endif %}
-        <hr>
-        {% block content %}{% endblock %}
+        <div style="float:left; width:50em">
+            <hr>
+            {% block content %}{% endblock %}
+        </div>
     </body>
 </html>

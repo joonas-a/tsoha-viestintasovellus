@@ -16,12 +16,14 @@ def logout():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return redirect("/")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         if users.login(username, password):
-            return redirect("/")
+            if request.referrer == "/login":
+                return redirect("/")
+            return redirect(request.referrer)
         else:
             return render_template("error.html", message="Username or password is wrong")
 
